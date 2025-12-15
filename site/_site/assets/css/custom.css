@@ -1,0 +1,31 @@
+.logo-block {
+    text-align: left;
+    margin-bottom: 1rem;
+}
+
+.docs-logo {
+    max-width: 220px;
+    /* tweak to taste */
+    height: auto;
+    display: block;
+    margin-bottom: 0.5rem;
+}
+
+.legend-nav table {
+    border-collapse: collapse;
+    font-size: 0.9rem;
+}
+
+.legend-nav td:first-child {
+    width: 24px;
+    text-align: center;
+    padding-right: 6px;
+}
+
+.legend-nav a {
+    text-decoration: none;
+}
+
+.legend-nav a:hover {
+    text-decoration: underline;
+}

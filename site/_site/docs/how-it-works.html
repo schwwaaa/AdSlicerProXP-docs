@@ -1,0 +1,281 @@
+<!DOCTYPE html>
+<html lang="en-US">
+  <head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+<!-- Begin Jekyll SEO tag v2.8.0 -->
+<title>Home</title>
+<meta name="generator" content="Jekyll v3.10.0" />
+<meta property="og:title" content="Home" />
+<meta property="og:locale" content="en_US" />
+<link rel="canonical" href="http://localhost:4000/adslicerproxp/docs/how-it-works.html" />
+<meta property="og:url" content="http://localhost:4000/adslicerproxp/docs/how-it-works.html" />
+<meta property="og:type" content="website" />
+<meta name="twitter:card" content="summary" />
+<meta property="twitter:title" content="Home" />
+<script type="application/ld+json">
+{"@context":"https://schema.org","@type":"WebPage","headline":"Home","publisher":{"@type":"Organization","logo":{"@type":"ImageObject","url":"http://localhost:4000/adslicerproxp/assets/img/logo.png"}},"url":"http://localhost:4000/adslicerproxp/docs/how-it-works.html"}</script>
+<!-- End Jekyll SEO tag -->
+
+    <link rel="stylesheet" href="/adslicerproxp/assets/css/style.css?v=eda4e997439e526a8385ab52703f3dd60568982e">
+    <!--[if lt IE 9]>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/html5shiv/3.7.3/html5shiv.min.js"></script>
+    <![endif]-->
+    <!-- start custom head snippets, customize with your own _includes/head-custom.html file -->
+
+<!-- Setup Google Analytics -->
+
+
+
+<!-- You can set your favicon here -->
+<!-- link rel="shortcut icon" type="image/x-icon" href="/adslicerproxp/favicon.ico" -->
+
+<!-- end custom head snippets -->
+
+  </head>
+  <body>
+    <div class="wrapper">
+      <header>
+        <h1><a href="http://localhost:4000/adslicerproxp/"> </a></h1>
+
+        
+          <img src="/adslicerproxp/assets/img/logo.png" alt="Logo" />
+        
+
+        <p> </p>
+
+        
+        <p class="view"><a href="https://github.com/schwwaaa/AdSlicerProXP-docs">View the Project on GitHub <small>schwwaaa/AdSlicerProXP-docs</small></a></p>
+        
+
+        
+
+        
+      </header>
+      <section>
+
+      <h1 id="how-it-works">How It Works</h1>
+
+<h2 id="1-black-segment-detection-ffmpeg-blackdetect">1. Black Segment Detection (ffmpeg blackdetect)</h2>
+<ul>
+  <li>Uses the ffmpeg <code class="language-plaintext highlighter-rouge">blackdetect</code> filter to find near-black segments.</li>
+  <li>Segments shorter than <code class="language-plaintext highlighter-rouge">--black-min-dur</code> are discarded.</li>
+  <li>Segments separated by ≤ <code class="language-plaintext highlighter-rouge">--merge-gap</code> seconds are merged.</li>
+</ul>
+
+<h2 id="2-commercial-interval-planning">2. Commercial Interval Planning</h2>
+<ul>
+  <li>The <strong>gaps between black segments</strong> are measured.</li>
+  <li>Gaps between <code class="language-plaintext highlighter-rouge">--min-commercial</code> and <code class="language-plaintext highlighter-rouge">--max-commercial</code> are classified as commercial blocks.</li>
+  <li>Everything outside these gaps is considered <strong>show content</strong>.</li>
+  <li>Optional pre/post padding extends boundaries for smoother edits.</li>
+</ul>
+
+<h2 id="3-exporting-media">3. Exporting Media</h2>
+<ul>
+  <li>Individual commercials are exported as separate MP4 files.</li>
+  <li>Remaining keep segments are concatenated into a clean “show” file.</li>
+  <li><code class="language-plaintext highlighter-rouge">--reencode</code> ensures perfect frame-accurate cuts when needed.</li>
+</ul>
+
+<h2 id="4-logging--diagnostics">4. Logging &amp; Diagnostics</h2>
+<ul>
+  <li><code class="language-plaintext highlighter-rouge">detect.json</code> — structured black/commercial/keep intervals</li>
+  <li><code class="language-plaintext highlighter-rouge">detect.csv</code> — flattened interval table</li>
+  <li>Optional ffmpeg stderr logs</li>
+</ul>
+
+<h2 id="5-batch-processing">5. Batch Processing</h2>
+<ul>
+  <li><code class="language-plaintext highlighter-rouge">--input-dir</code> + <code class="language-plaintext highlighter-rouge">--glob</code> recursively process entire libraries of recordings.</li>
+</ul>
+
+<h1 id="program-template">Program Template</h1>
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>adslicerproxp <span class="se">\</span>
+  <span class="nt">--input</span> INPUT.mp4 <span class="se">\</span>
+  <span class="nt">--outdir</span> OUTPUT_DIR <span class="se">\</span>
+  <span class="nt">--black-min-dur</span> VALUE <span class="se">\</span>
+  <span class="nt">--pix-th</span> VALUE <span class="se">\</span>
+  <span class="nt">--pic-th</span> VALUE <span class="se">\</span>
+  <span class="nt">--merge-gap</span> VALUE <span class="se">\</span>
+  <span class="nt">--edge-pad-pre</span> VALUE <span class="se">\</span>
+  <span class="nt">--edge-pad-post</span> VALUE <span class="se">\</span>
+  <span class="nt">--min-commercial</span> VALUE <span class="se">\</span>
+  <span class="nt">--max-commercial</span> VALUE <span class="se">\</span>
+  <span class="nt">--include-black</span> <span class="se">\</span>
+  <span class="nt">--reencode</span> <span class="se">\</span>
+  <span class="nt">--dry-run</span> <span class="se">\</span>
+  <span class="nt">-v</span>
+</code></pre></div></div>
+
+<p>Batch mode:</p>
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>adslicerproxp <span class="se">\</span>
+  <span class="nt">--input-dir</span> INPUT_FOLDER <span class="se">\</span>
+  <span class="nt">--glob</span> <span class="s2">"*.mp4"</span> <span class="se">\</span>
+  <span class="nt">--outdir</span> OUTPUT_DIR <span class="se">\</span>
+  <span class="nt">-v</span>
+</code></pre></div></div>
+
+<h1 id="arguments">Arguments</h1>
+
+<h2 id="input--output">Input / Output</h2>
+
+<ul>
+  <li>
+    <p><strong><code class="language-plaintext highlighter-rouge">--input</code></strong> <em>(string, path)</em><br />
+Process a single input video file.</p>
+  </li>
+  <li>
+    <p><strong><code class="language-plaintext highlighter-rouge">--input-dir</code></strong> <em>(string, path)</em><br />
+Recursively process all matching video files under this directory (used with <code class="language-plaintext highlighter-rouge">--glob</code>).</p>
+  </li>
+  <li>
+    <p><strong><code class="language-plaintext highlighter-rouge">--glob</code></strong> <em>(string, glob pattern)</em><br />
+File-matching pattern when using <code class="language-plaintext highlighter-rouge">--input-dir</code> (e.g. <code class="language-plaintext highlighter-rouge">"*.mp4"</code>, <code class="language-plaintext highlighter-rouge">"*.mov"</code>).</p>
+  </li>
+  <li>
+    <p><strong><code class="language-plaintext highlighter-rouge">--outdir</code></strong> <em>(string, path)</em><br />
+Base output directory where per-input subfolders, show files, commercial clips, and logs are written.</p>
+  </li>
+</ul>
+
+<hr />
+
+<h2 id="detection-settings">Detection Settings</h2>
+
+<ul>
+  <li>
+    <p><strong><code class="language-plaintext highlighter-rouge">--black-min-dur</code></strong> <em>(float, seconds)</em><br />
+Minimum duration for a detected black segment. Shorter intervals are treated as noise and ignored.</p>
+  </li>
+  <li>
+    <p><strong><code class="language-plaintext highlighter-rouge">--pix-th</code></strong> <em>(float, 0.0–1.0)</em><br />
+Pixel luma threshold for ffmpeg <code class="language-plaintext highlighter-rouge">blackdetect</code>. Lower values = stricter “black” definition.</p>
+  </li>
+  <li>
+    <p><strong><code class="language-plaintext highlighter-rouge">--pic-th</code></strong> <em>(float, 0.0–1.0)</em><br />
+Fraction of pixels that must be under <code class="language-plaintext highlighter-rouge">pix-th</code> for a frame to count as black.</p>
+  </li>
+  <li>
+    <p><strong><code class="language-plaintext highlighter-rouge">--merge-gap</code></strong> <em>(float, seconds)</em><br />
+Merge adjacent black segments separated by less than or equal to this time gap.</p>
+  </li>
+</ul>
+
+<hr />
+
+<h2 id="cutting-behavior">Cutting Behavior</h2>
+
+<ul>
+  <li>
+    <p><strong><code class="language-plaintext highlighter-rouge">--edge-pad-pre</code></strong> <em>(float, seconds)</em><br />
+Extra padding added before detected boundaries (commercial or show) to avoid cutting too tight.</p>
+  </li>
+  <li>
+    <p><strong><code class="language-plaintext highlighter-rouge">--edge-pad-post</code></strong> <em>(float, seconds)</em><br />
+Extra padding added after detected boundaries for smoother transitions.</p>
+  </li>
+  <li>
+    <p><strong><code class="language-plaintext highlighter-rouge">--min-commercial</code></strong> <em>(float, seconds)</em><br />
+Minimum gap duration to classify a region as a commercial block.</p>
+  </li>
+  <li>
+    <p><strong><code class="language-plaintext highlighter-rouge">--max-commercial</code></strong> <em>(float, seconds)</em><br />
+Maximum gap duration to classify a region as a commercial block.</p>
+  </li>
+  <li>
+    <p><strong><code class="language-plaintext highlighter-rouge">--include-black</code></strong> <em>(boolean flag)</em><br />
+When present, includes surrounding black segments inside exported commercial clips.</p>
+  </li>
+  <li>
+    <p><strong><code class="language-plaintext highlighter-rouge">--reencode</code></strong> <em>(boolean flag)</em><br />
+When present, re-encodes segments for frame-accurate cuts instead of using stream copy.</p>
+  </li>
+  <li>
+    <p><strong><code class="language-plaintext highlighter-rouge">--dry-run</code></strong> <em>(boolean flag)</em><br />
+When present, performs detection and writes logs only — no media is cut or written.</p>
+  </li>
+</ul>
+
+<hr />
+
+<h2 id="verbosity">Verbosity</h2>
+
+<ul>
+  <li>
+    <p><strong><code class="language-plaintext highlighter-rouge">-v</code></strong> <em>(boolean flag)</em><br />
+Enable INFO-level logging.</p>
+  </li>
+  <li>
+    <p><strong><code class="language-plaintext highlighter-rouge">-vv</code></strong> <em>(boolean flag)</em><br />
+Enable DEBUG-level logging (more verbose output, including detailed ffmpeg commands).</p>
+  </li>
+</ul>
+
+<h1 id="real-world-example">Real World Example</h1>
+
+<p>Single-video example:</p>
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>adslicerproxp <span class="se">\</span>
+  <span class="nt">-i</span> vhs_capture.mp4 <span class="se">\</span>
+  <span class="nt">--outdir</span> ./out <span class="se">\</span>
+  <span class="nt">--black-min-dur</span> 0.15 <span class="se">\</span>
+  <span class="nt">--pix-th</span> 0.10 <span class="se">\</span>
+  <span class="nt">--pic-th</span> 0.97 <span class="se">\</span>
+  <span class="nt">--merge-gap</span> 2.0 <span class="se">\</span>
+  <span class="nt">--edge-pad-pre</span> 0.25 <span class="se">\</span>
+  <span class="nt">--edge-pad-post</span> 0.10 <span class="se">\</span>
+  <span class="nt">--min-commercial</span> 4.0 <span class="se">\</span>
+  <span class="nt">--max-commercial</span> 185.0 <span class="se">\</span>
+  <span class="nt">--include-black</span> <span class="se">\</span>
+  <span class="nt">--reencode</span> <span class="se">\</span>
+  <span class="nt">-v</span>
+</code></pre></div></div>
+
+<p>Batch example:</p>
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>adslicerproxp <span class="se">\</span>
+  <span class="nt">--input-dir</span> /captures/vhs_rips <span class="se">\</span>
+  <span class="nt">--glob</span> <span class="s2">"*.mp4"</span> <span class="se">\</span>
+  <span class="nt">--outdir</span> /captures/processed <span class="se">\</span>
+  <span class="nt">--black-min-dur</span> 0.12 <span class="se">\</span>
+  <span class="nt">--merge-gap</span> 1.8 <span class="se">\</span>
+  <span class="nt">--min-commercial</span> 5.0 <span class="se">\</span>
+  <span class="nt">--max-commercial</span> 210.0 <span class="se">\</span>
+  <span class="nt">-v</span>
+</code></pre></div></div>
+
+<h2 id="program-output">Program Output</h2>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>out/
+  &lt;basename&gt;/
+    commercials/
+      &lt;basename&gt;_ad_0001.mp4
+      &lt;basename&gt;_ad_0002.mp4
+    show/
+      _parts/
+        part_0001.mp4
+        part_0002.mp4
+      &lt;basename&gt;_show.mp4
+    logs/
+      detect.json
+      detect.csv
+      ffmpeg_blackdetect.log
+</code></pre></div></div>
+
+
+      </section>
+      <footer>
+        
+        <p>This project is maintained by <a href="https://github.com/schwwaaa">schwwaaa</a></p>
+        
+        <p><small>Hosted on GitHub Pages &mdash; Theme by <a href="https://github.com/orderedlist">orderedlist</a></small></p>
+      </footer>
+    </div>
+    <script src="/adslicerproxp/assets/js/scale.fix.js"></script>
+  </body>
+</html>

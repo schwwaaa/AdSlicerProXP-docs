@@ -1,0 +1,242 @@
+<!DOCTYPE html>
+<html lang="en-US">
+  <head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+<!-- Begin Jekyll SEO tag v2.8.0 -->
+<title>Use Cases</title>
+<meta name="generator" content="Jekyll v3.10.0" />
+<meta property="og:title" content="Use Cases" />
+<meta property="og:locale" content="en_US" />
+<link rel="canonical" href="http://localhost:4000/adslicerproxp/docs/use-cases.html" />
+<meta property="og:url" content="http://localhost:4000/adslicerproxp/docs/use-cases.html" />
+<meta property="og:type" content="website" />
+<meta name="twitter:card" content="summary" />
+<meta property="twitter:title" content="Use Cases" />
+<script type="application/ld+json">
+{"@context":"https://schema.org","@type":"WebPage","headline":"Use Cases","publisher":{"@type":"Organization","logo":{"@type":"ImageObject","url":"http://localhost:4000/adslicerproxp/assets/img/logo.png"}},"url":"http://localhost:4000/adslicerproxp/docs/use-cases.html"}</script>
+<!-- End Jekyll SEO tag -->
+
+    <link rel="stylesheet" href="/adslicerproxp/assets/css/style.css?v=eda4e997439e526a8385ab52703f3dd60568982e">
+    <!--[if lt IE 9]>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/html5shiv/3.7.3/html5shiv.min.js"></script>
+    <![endif]-->
+    <!-- start custom head snippets, customize with your own _includes/head-custom.html file -->
+
+<!-- Setup Google Analytics -->
+
+
+
+<!-- You can set your favicon here -->
+<!-- link rel="shortcut icon" type="image/x-icon" href="/adslicerproxp/favicon.ico" -->
+
+<!-- end custom head snippets -->
+
+  </head>
+  <body>
+    <div class="wrapper">
+      <header>
+        <h1><a href="http://localhost:4000/adslicerproxp/"> </a></h1>
+
+        
+          <img src="/adslicerproxp/assets/img/logo.png" alt="Logo" />
+        
+
+        <p> </p>
+
+        
+        <p class="view"><a href="https://github.com/schwwaaa/AdSlicerProXP-docs">View the Project on GitHub <small>schwwaaa/AdSlicerProXP-docs</small></a></p>
+        
+
+        
+
+        
+      </header>
+      <section>
+
+      <h2 id="use-cases">Use Cases</h2>
+
+<h3 id="archiving-full-broadcasts-with-and-without-commercials">Archiving Full Broadcasts With and Without Commercials</h3>
+
+<p><strong>Example:</strong><br />
+A collector digitizes a 1992 NBC Sunday Night Movie from VHS. They want to preserve the <em>entire broadcast</em> — including vintage promos and ads — but they also want a clean, ad-free version for watching.</p>
+
+<p><strong>Why AdSlicerProXP Is Necessary:</strong><br />
+Manual cutting risks trimming too tight or leaving partial commercials. AdSlicerProXP automatically detects black slugs that originally separated segments, correctly identifies ad breaks, and exports:</p>
+
+<ul>
+  <li><code class="language-plaintext highlighter-rouge">/show/vhs_capture_show.mp4</code> → clean movie</li>
+  <li><code class="language-plaintext highlighter-rouge">/commercials/vhs_capture_ad_XXXX.mp4</code> → all commercial blocks</li>
+  <li><code class="language-plaintext highlighter-rouge">/logs/detect.json</code> → reproducible archive metadata</li>
+</ul>
+
+<p><strong>Outcome:</strong><br />
+Archivists get <em>both</em> the authentic historical object <strong>and</strong> a modernized clean playback master — all generated consistently and without hand-editing.</p>
+
+<hr />
+
+<h3 id="digitizing-vhs-tapes-with-automatic-cleanup">Digitizing VHS Tapes With Automatic Cleanup</h3>
+
+<p><strong>Example:</strong><br />
+A preservation group receives 300 home-recorded VHS tapes spanning 1986–2004. Each tape contains 2–6 hours of mixed programming with unpredictable commercial spacing.</p>
+
+<p><strong>Why AdSlicerProXP Is Necessary:</strong><br />
+Batch-mode processing (<code class="language-plaintext highlighter-rouge">--input-dir</code>) allows them to digitize and process entire shelves of tapes at once.<br />
+Threshold tuning ensures blackdetect works on varied analog sources.</p>
+
+<p><strong>Workflow:</strong></p>
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>adslicerproxp <span class="se">\</span>
+  <span class="nt">--input-dir</span> /captures/raw_transfers <span class="se">\</span>
+  <span class="nt">--glob</span> <span class="s2">"*.mp4"</span> <span class="se">\</span>
+  <span class="nt">--outdir</span> /captures/processed <span class="se">\</span>
+  <span class="nt">--black-min-dur</span> 0.12 <span class="se">\</span>
+  <span class="nt">--merge-gap</span> 1.8 <span class="se">\</span>
+  <span class="nt">-v</span>
+</code></pre></div></div>
+
+<p><strong>Outcome:</strong><br />
+Hundreds of hours of content are automatically:</p>
+<ul>
+  <li>segmented,</li>
+  <li>cleaned,</li>
+  <li>exported into uniform directory structures,</li>
+  <li>and logged for verification.</li>
+</ul>
+
+<p>This eliminates <em>months</em> of manual editing.</p>
+
+<hr />
+
+<h3 id="preparing-footage-for-youtube-or-streaming-uploads">Preparing Footage for YouTube or Streaming Uploads</h3>
+
+<p><strong>Example:</strong><br />
+A creator wants to upload episodes of a 1990 cartoon recorded off Fox Kids.<br />
+The commercial breaks contain copyrighted ads that could trigger Content ID strikes.</p>
+
+<p><strong>Why AdSlicerProXP Is Necessary:</strong><br />
+The creator needs predictable, machine-clean removal of commercials without touching the show content.</p>
+
+<p><strong>Workflow:</strong></p>
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>adslicerproxp <span class="se">\</span>
+  <span class="nt">-i</span> cartoon_ep4.mp4 <span class="se">\</span>
+  <span class="nt">--outdir</span> ./youtube_ready <span class="se">\</span>
+  <span class="nt">--include-black</span> <span class="se">\</span>
+  <span class="nt">--reencode</span> <span class="se">\</span>
+  <span class="nt">-v</span>
+</code></pre></div></div>
+
+<p><strong>Outcome:</strong><br />
+YouTube receives a clean master with reliable boundaries.<br />
+No leftover half-commercial frames = reduced risk of claims.</p>
+
+<hr />
+
+<h3 id="building-training-sets-for-machine-learning">Building Training Sets for Machine Learning</h3>
+
+<p><strong>Example:</strong><br />
+A research lab is training a model to detect “commercial boundary transitions” in old broadcast content.<br />
+They need ground-truth timestamps for:</p>
+
+<ul>
+  <li>black slugs</li>
+  <li>merged black intervals</li>
+  <li>detected ad gaps</li>
+  <li>keep segments</li>
+</ul>
+
+<p><strong>Why AdSlicerProXP Is Necessary:</strong><br />
+It automatically generates the labeled data they need.</p>
+
+<p><strong>Output Used for ML:</strong></p>
+<ul>
+  <li><code class="language-plaintext highlighter-rouge">detect.json</code> — structured semantic intervals</li>
+  <li><code class="language-plaintext highlighter-rouge">detect.csv</code> — tabular timestamp breakdown</li>
+  <li>separate commercial clips — positives</li>
+  <li>show clips — negatives</li>
+</ul>
+
+<p><strong>Outcome:</strong><br />
+A complete labeled dataset is produced <em>without manual annotation</em>, enabling ML teams to iterate quickly.</p>
+
+<hr />
+
+<h3 id="creating-commercial-compilations">Creating Commercial Compilations</h3>
+
+<p><strong>Example:</strong><br />
+An editor wants to create a video titled <strong>“All McDonald’s Commercials From 1997 ABC Broadcasts.”</strong><br />
+They have dozens of full-length recordings and want only the ad blocks, not the shows.</p>
+
+<p><strong>Why AdSlicerProXP Is Necessary:</strong><br />
+Commercials are already cleanly extracted into:</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>commercials/
+  tape1_ad_0001.mp4
+  tape1_ad_0002.mp4
+  tape2_ad_0001.mp4
+  ...
+</code></pre></div></div>
+
+<p><strong>Workflow:</strong><br />
+The editor can drop all the extracted clips into a timeline or run a secondary script to sort by brand (e.g., via captioning or logo detection).</p>
+
+<p><strong>Outcome:</strong><br />
+An hours-long compilation of ads assembled without touching an editing timeline manually.</p>
+
+<hr />
+
+<h3 id="6-high-volume-cleanup-for-tv-archives-and-libraries">6. High-Volume Cleanup for TV Archives and Libraries</h3>
+
+<p><strong>Example:</strong><br />
+A university digitization lab processes <strong>1,200</strong> Betacam SP and VHS tapes from 1980–2002.<br />
+Each tape contains long-form recordings with unpredictable ad patterns.</p>
+
+<p><strong>Why AdSlicerProXP Is Necessary:</strong><br />
+They require a system that:</p>
+
+<ul>
+  <li>produces <em>consistent logs</em> for auditing,</li>
+  <li>preserves commercial breaks,</li>
+  <li>generates clean show files,</li>
+  <li>scales to thousands of hours,</li>
+  <li>and requires minimal manual supervision.</li>
+</ul>
+
+<p><strong>Workflow:</strong></p>
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>adslicerproxp <span class="se">\</span>
+  <span class="nt">--input-dir</span> /library/raw_airchecks <span class="se">\</span>
+  <span class="nt">--glob</span> <span class="s2">"*.mp4"</span> <span class="se">\</span>
+  <span class="nt">--outdir</span> /library/processed <span class="se">\</span>
+  <span class="nt">--black-min-dur</span> 0.15 <span class="se">\</span>
+  <span class="nt">--merge-gap</span> 2.0 <span class="se">\</span>
+  <span class="nt">--min-commercial</span> 3 <span class="se">\</span>
+  <span class="nt">--max-commercial</span> 300 <span class="se">\</span>
+  <span class="nt">-v</span>
+</code></pre></div></div>
+
+<p><strong>Outcome:</strong><br />
+Every tape now has:</p>
+<ul>
+  <li>a clean archival master,</li>
+  <li>a full commercial archive,</li>
+  <li>reproducible logs,</li>
+  <li>uniform directory layout,</li>
+  <li>and metadata ready for ingestion into a digital asset management system.</li>
+</ul>
+
+<p>This brings large institutional archives into a <strong>standardized, searchable</strong> state.</p>
+
+
+
+      </section>
+      <footer>
+        
+        <p>This project is maintained by <a href="https://github.com/schwwaaa">schwwaaa</a></p>
+        
+        <p><small>Hosted on GitHub Pages &mdash; Theme by <a href="https://github.com/orderedlist">orderedlist</a></small></p>
+      </footer>
+    </div>
+    <script src="/adslicerproxp/assets/js/scale.fix.js"></script>
+  </body>
+</html>
