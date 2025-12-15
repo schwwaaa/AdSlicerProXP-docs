@@ -1,6 +1,12 @@
-## Use Cases
+---
+layout: default
+title: Use cases
+nav_order: 1
+---
 
-### Archiving Full Broadcasts With and Without Commercials
+# Use Cases
+
+## Archiving Full Broadcasts With and Without Commercials
 
 **Example:**  
 A collector digitizes a 1992 NBC Sunday Night Movie from VHS. They want to preserve the *entire broadcast* — including vintage promos and ads — but they also want a clean, ad-free version for watching.
@@ -17,7 +23,7 @@ Archivists get *both* the authentic historical object **and** a modernized clean
 
 ---
 
-### Digitizing VHS Tapes With Automatic Cleanup
+## Digitizing VHS Tapes With Automatic Cleanup
 
 **Example:**  
 A preservation group receives 300 home-recorded VHS tapes spanning 1986–2004. Each tape contains 2–6 hours of mixed programming with unpredictable commercial spacing.
@@ -48,7 +54,7 @@ This eliminates *months* of manual editing.
 
 ---
 
-### Preparing Footage for YouTube or Streaming Uploads
+## Preparing Footage for YouTube or Streaming Uploads
 
 **Example:**  
 A creator wants to upload episodes of a 1990 cartoon recorded off Fox Kids.  
@@ -73,7 +79,7 @@ No leftover half-commercial frames = reduced risk of claims.
 
 ---
 
-### Building Training Sets for Machine Learning
+## Building Training Sets for Machine Learning
 
 **Example:**  
 A research lab is training a model to detect “commercial boundary transitions” in old broadcast content.  
@@ -98,7 +104,7 @@ A complete labeled dataset is produced *without manual annotation*, enabling ML 
 
 ---
 
-### Creating Commercial Compilations
+## Creating Commercial Compilations
 
 **Example:**  
 An editor wants to create a video titled **“All McDonald’s Commercials From 1997 ABC Broadcasts.”**  
@@ -123,7 +129,7 @@ An hours-long compilation of ads assembled without touching an editing timeline 
 
 ---
 
-### 6. High-Volume Cleanup for TV Archives and Libraries
+## 6. High-Volume Cleanup for TV Archives and Libraries
 
 **Example:**  
 A university digitization lab processes **1,200** Betacam SP and VHS tapes from 1980–2002.  

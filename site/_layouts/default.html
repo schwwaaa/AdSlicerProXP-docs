@@ -1,0 +1,43 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width,initial-scale=1" />
+    <title>{{ page.title }} · {{ site.title }}</title>
+    <link rel="stylesheet" href="{{ '/assets/css/style.css' | relative_url }}">
+</head>
+
+<body>
+    <header class="site-header">
+        <div class="wrap header-inner">
+
+            <!-- BRAND BLOCK (CENTERED) -->
+            <div class="brand">
+                {% if site.logo %}
+                <a href="{{ "/index/" | relative_url }}" >
+                  <img class="brand-logo" src="{{ site.logo | relative_url }}" alt="{{ site.title }}" /> {% endif %}
+                </a>
+                <p class="brand-title">
+                    {{ site.title }}
+                </p>
+
+                <!-- MINI NAV UNDER IMAGE (CENTERED) -->
+                <p class="toplinks">
+                    <a href="{{ "/how-it-works/" | relative_url }}"  rel="noopener">How it works</a>
+                    <span class="sep">|</span>
+                    <a href="{{ "/tips-and-tricks/" | relative_url }}">Tips & tricks</a>
+                    <span class="sep">|</span>
+                    <a href="{{ "/use-cases/" | relative_url }}">Use Cases</a>
+                </p>
+
+            </div>
+        </div>
+    </header>
+
+    <main class="wrap page">
+        {{ content }}
+    </main>
+</body>
+
+</html>

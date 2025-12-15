@@ -13,8 +13,3 @@ AdSlicerProXP provides a production-grade workflow to:
 - extract the show and ads with precise time boundaries,  
 - generate reproducible logs for auditing and QC,  
 - run as a batch processor across directories of mixed recordings.
-
-|---|---|
-| ✂️ | [How it works]({{ "/how-it-works/" | relative_url }}) |
-| ⚡ | [Tips & Tricks]({{ "/tips-and-tricks/" | relative_url }}) |
-| 💾 | [Use Cases]({{ "/use-cases/" | relative_url }}) |
