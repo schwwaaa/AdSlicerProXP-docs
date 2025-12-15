@@ -16,8 +16,7 @@ plugins:
 # OR if you’re using the plain theme line instead:
 # theme: jekyll-theme-minimal
 
-baseurl: "/adslicerproxp"   # (project site; you probably already have this)
-
+baseurl: "/AdSlicerProXP-docs"
 exclude:
   - README.md
   - LICENSE
