@@ -15,7 +15,7 @@
             <!-- BRAND BLOCK (CENTERED) -->
             <div class="brand">
                 {% if site.logo %}
-                <a href="{{ "/index/" | relative_url }}" >
+                <a href="{{ "/index" | relative_url }}" >
                   <img class="brand-logo" src="{{ site.logo | relative_url }}" alt="{{ site.title }}" /> {% endif %}
                 </a>
                 <p class="brand-title">
@@ -24,11 +24,11 @@
 
                 <!-- MINI NAV UNDER IMAGE (CENTERED) -->
                 <p class="toplinks">
-                    <a href="{{ "/how-it-works/" | relative_url }}"  rel="noopener">How it works</a>
+                    <a href="{{ "/how-it-works" | relative_url }}"  rel="noopener">How it works</a>
                     <span class="sep">|</span>
-                    <a href="{{ "/tips-and-tricks/" | relative_url }}">Tips & tricks</a>
+                    <a href="{{ "/tips-and-tricks" | relative_url }}">Tips & tricks</a>
                     <span class="sep">|</span>
-                    <a href="{{ "/use-cases/" | relative_url }}">Use Cases</a>
+                    <a href="{{ "/use-cases" | relative_url }}">Use Cases</a>
                 </p>
 
             </div>
