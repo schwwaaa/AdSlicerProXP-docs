@@ -1,0 +1,828 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>AdSlicerProXP — Help</title>
+<style>
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+
+  body {
+    background: #008080;
+    font-family: "MS Sans Serif", "Microsoft Sans Serif", Arial, sans-serif;
+    font-size: 11px;
+    color: #000;
+    min-height: 100vh;
+    padding: 8px;
+  }
+
+  .window {
+    background: #c0c0c0;
+    border-top: 2px solid #fff;
+    border-left: 2px solid #fff;
+    border-right: 2px solid #808080;
+    border-bottom: 2px solid #808080;
+    box-shadow: 1px 1px 0 #000;
+    display: flex;
+    flex-direction: column;
+    height: calc(100vh - 16px);
+    max-width: 1100px;
+    margin: 0 auto;
+  }
+
+  .title-bar {
+    background: linear-gradient(to right, #000080, #1084d0);
+    padding: 3px 4px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    flex-shrink: 0;
+  }
+
+  .title-bar-text {
+    color: #fff;
+    font-weight: bold;
+    font-size: 11px;
+    display: flex;
+    align-items: center;
+    gap: 6px;
+  }
+
+  .title-bar-controls { display: flex; gap: 2px; }
+
+  .tb-btn {
+    width: 16px; height: 14px;
+    background: #c0c0c0;
+    border-top: 1px solid #fff;
+    border-left: 1px solid #fff;
+    border-right: 1px solid #808080;
+    border-bottom: 1px solid #808080;
+    font-size: 9px;
+    cursor: default;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: bold;
+    color: #000;
+  }
+
+  .menu-bar {
+    background: #c0c0c0;
+    padding: 2px 4px;
+    display: flex;
+    border-bottom: 1px solid #808080;
+    flex-shrink: 0;
+  }
+
+  .menu-item { padding: 2px 8px; cursor: default; font-size: 11px; }
+  .menu-item:hover { background: #000080; color: #fff; }
+
+  .toolbar {
+    background: #c0c0c0;
+    padding: 3px 4px;
+    border-bottom: 1px solid #808080;
+    display: flex;
+    gap: 2px;
+    align-items: center;
+    flex-shrink: 0;
+  }
+
+  .tool-btn {
+    background: #c0c0c0;
+    border-top: 1px solid #fff;
+    border-left: 1px solid #fff;
+    border-right: 1px solid #808080;
+    border-bottom: 1px solid #808080;
+    padding: 2px 8px;
+    font-size: 11px;
+    cursor: default;
+    white-space: nowrap;
+  }
+
+  .tool-sep { width: 1px; background: #808080; height: 18px; margin: 0 3px; }
+
+  .main-area { display: flex; flex: 1; overflow: hidden; }
+
+  .tree-panel {
+    width: 200px;
+    min-width: 200px;
+    background: #fff;
+    border-right: 2px solid #808080;
+    overflow-y: auto;
+    padding: 4px 0;
+    flex-shrink: 0;
+  }
+
+  .tree-panel::-webkit-scrollbar { width: 16px; }
+  .tree-panel::-webkit-scrollbar-track { background: #c0c0c0; }
+  .tree-panel::-webkit-scrollbar-thumb {
+    background: #c0c0c0;
+    border-top: 1px solid #fff; border-left: 1px solid #fff;
+    border-right: 1px solid #808080; border-bottom: 1px solid #808080;
+  }
+
+  .tree-item {
+    padding: 2px 4px 2px 16px;
+    cursor: default;
+    display: flex;
+    align-items: center;
+    gap: 4px;
+    font-size: 11px;
+    white-space: nowrap;
+  }
+
+  .tree-item:hover { background: #000080; color: #fff; }
+  .tree-item.selected { background: #000080; color: #fff; }
+  .tree-section {
+    padding: 5px 4px 2px 6px;
+    font-weight: bold;
+    font-size: 10px;
+    color: #808080;
+    border-bottom: 1px solid #c0c0c0;
+    cursor: default;
+  }
+
+  .content-area {
+    flex: 1;
+    background: #fff;
+    overflow-y: auto;
+    overflow-x: hidden;
+  }
+
+  .content-area::-webkit-scrollbar { width: 16px; }
+  .content-area::-webkit-scrollbar-track { background: #c0c0c0; }
+  .content-area::-webkit-scrollbar-thumb {
+    background: #c0c0c0;
+    border-top: 1px solid #fff; border-left: 1px solid #fff;
+    border-right: 1px solid #808080; border-bottom: 1px solid #808080;
+  }
+
+  .page { display: none; padding: 14px 18px 24px; }
+  .page.visible { display: block; }
+
+  .page h1 {
+    font-size: 14px; font-weight: bold; color: #000080;
+    border-bottom: 2px solid #000080; padding-bottom: 4px; margin-bottom: 10px;
+  }
+
+  .page h2 {
+    font-size: 12px; font-weight: bold; color: #000;
+    margin: 16px 0 5px;
+    border-bottom: 1px solid #c0c0c0; padding-bottom: 2px;
+  }
+
+  .page h3 {
+    font-size: 11px; font-weight: bold; color: #000080;
+    margin: 10px 0 3px;
+  }
+
+  .page p { font-size: 11px; line-height: 1.55; margin-bottom: 7px; }
+
+  .page ul, .page ol { margin: 3px 0 9px 20px; }
+  .page li { font-size: 11px; line-height: 1.6; margin-bottom: 2px; }
+
+  .inset {
+    background: #fff;
+    border-top: 1px solid #808080; border-left: 1px solid #808080;
+    border-right: 1px solid #fff; border-bottom: 1px solid #fff;
+    padding: 6px 10px; margin: 6px 0 10px;
+  }
+
+  .page code {
+    font-family: "Courier New", monospace; font-size: 11px;
+    background: #fff; border: 1px solid #808080; padding: 0 3px;
+  }
+
+  pre {
+    font-family: "Courier New", monospace; font-size: 11px;
+    background: #fff;
+    border-top: 1px solid #808080; border-left: 1px solid #808080;
+    border-right: 1px solid #fff; border-bottom: 1px solid #fff;
+    padding: 7px 10px; margin: 5px 0 10px;
+    overflow-x: auto; white-space: pre; line-height: 1.5;
+  }
+
+  .page table { width: 100%; border-collapse: collapse; font-size: 11px; margin: 5px 0 12px; }
+  .page th {
+    background: #000080; color: #fff;
+    padding: 3px 8px; text-align: left;
+    font-size: 11px; font-weight: bold; border: 1px solid #808080;
+  }
+  .page td { padding: 2px 8px; border: 1px solid #c0c0c0; vertical-align: top; line-height: 1.45; }
+  .page tr:nth-child(even) td { background: #f0f0f0; }
+  .page td:first-child { font-family: "Courier New", monospace; font-size: 10px; color: #000080; }
+
+  .info-box {
+    background: #ffffe0; border: 1px solid #808080;
+    padding: 5px 8px; margin: 7px 0;
+    font-size: 11px; display: flex; gap: 6px; align-items: flex-start;
+  }
+  .info-box .icon { flex-shrink: 0; font-size: 14px; }
+
+  .status-bar {
+    background: #c0c0c0; border-top: 1px solid #808080;
+    padding: 2px 6px; display: flex; gap: 0; flex-shrink: 0;
+  }
+  .status-panel {
+    border-top: 1px solid #808080; border-left: 1px solid #808080;
+    border-right: 1px solid #fff; border-bottom: 1px solid #fff;
+    padding: 1px 8px; font-size: 10px; margin-right: 4px;
+  }
+
+  .hero-banner {
+    background: #000080; color: #fff;
+    padding: 10px 12px; margin-bottom: 12px;
+    display: flex; align-items: center; gap: 10px;
+  }
+  .hero-banner .logo { font-size: 26px; line-height: 1; }
+  .hero-banner h1 { color: #fff; border-bottom: 1px solid #4060a0; font-size: 14px; margin-bottom: 2px; }
+  .hero-banner p { color: #c0d0ff; font-size: 11px; margin: 0; }
+
+  .step-list { margin: 6px 0 10px 0; }
+  .step { display: flex; gap: 8px; margin-bottom: 7px; align-items: flex-start; }
+  .step-num {
+    background: #000080; color: #fff; font-weight: bold; font-size: 10px;
+    width: 18px; height: 18px; display: flex; align-items: center;
+    justify-content: center; flex-shrink: 0; margin-top: 1px;
+  }
+  .step-body { flex: 1; font-size: 11px; line-height: 1.5; }
+  .step-body strong { color: #000080; }
+
+  .file-tree {
+    font-family: "Courier New", monospace; font-size: 11px;
+    background: #fff;
+    border-top: 1px solid #808080; border-left: 1px solid #808080;
+    border-right: 1px solid #fff; border-bottom: 1px solid #fff;
+    padding: 7px 10px; margin: 6px 0 10px; line-height: 1.7;
+  }
+  .file-tree .dir { color: #000080; font-weight: bold; }
+  .file-tree .note { color: #808080; }
+
+  .toc-link {
+    color: #000080; cursor: default; text-decoration: underline;
+  }
+</style>
+</head>
+<body>
+
+<div class="window">
+  <div class="title-bar">
+    <div class="title-bar-text">📋 AdSlicerProXP Help</div>
+    <div class="title-bar-controls">
+      <div class="tb-btn">_</div>
+      <div class="tb-btn">□</div>
+      <div class="tb-btn">✕</div>
+    </div>
+  </div>
+
+  <div class="menu-bar">
+    <div class="menu-item">File</div>
+    <div class="menu-item">Edit</div>
+    <div class="menu-item">View</div>
+    <div class="menu-item">Go</div>
+    <div class="menu-item">Help</div>
+  </div>
+
+  <div class="toolbar">
+    <div class="tool-btn" onclick="show('home')">🏠 Contents</div>
+    <div class="tool-sep"></div>
+    <div class="tool-btn" onclick="show('quickstart')">▶ Quick Start</div>
+    <div class="tool-btn" onclick="show('pipeline')">⚙ How It Works</div>
+    <div class="tool-btn" onclick="show('parameters')">🔧 Parameters</div>
+    <div class="tool-btn" onclick="show('tuning')">🎛 Tuning</div>
+    <div class="tool-sep"></div>
+    <div class="tool-btn" onclick="window.print()">🖨 Print</div>
+  </div>
+
+  <div class="main-area">
+    <div class="tree-panel">
+      <div class="tree-section">Contents</div>
+      <div class="tree-item selected" onclick="show('home')" id="nav-home">🏠 Introduction</div>
+
+      <div class="tree-section">Getting Started</div>
+      <div class="tree-item" onclick="show('quickstart')" id="nav-quickstart">▶ Quick Start</div>
+      <div class="tree-item" onclick="show('output')" id="nav-output">📁 Output Structure</div>
+
+      <div class="tree-section">Reference</div>
+      <div class="tree-item" onclick="show('pipeline')" id="nav-pipeline">⚙ How It Works</div>
+      <div class="tree-item" onclick="show('parameters')" id="nav-parameters">🔧 All Parameters</div>
+      <div class="tree-item" onclick="show('presets')" id="nav-presets">💾 Preset System</div>
+
+      <div class="tree-section">Guides</div>
+      <div class="tree-item" onclick="show('tuning')" id="nav-tuning">🎛 Tuning Guide</div>
+      <div class="tree-item" onclick="show('ml')" id="nav-ml">📊 ML Dataset</div>
+      <div class="tree-item" onclick="show('usecases')" id="nav-usecases">💡 Use Cases</div>
+      <div class="tree-item" onclick="show('building')" id="nav-building">🔨 Building</div>
+    </div>
+
+    <div class="content-area">
+
+      <!-- HOME -->
+      <div class="page visible" id="page-home">
+        <div class="hero-banner">
+          <div class="logo">📼</div>
+          <div>
+            <h1>AdSlicerProXP</h1>
+            <p>Broadcast Archival Commercial Slicer — Help Documentation</p>
+          </div>
+        </div>
+
+        <p>AdSlicerProXP is a fully automated advertisement detection and removal system built for long-form VHS captures, analog transfers, and TV recordings. It analyzes black slugs between program segments, determines likely commercial blocks, and outputs:</p>
+
+        <ul>
+          <li>A <strong>clean show file</strong> (ads removed)</li>
+          <li>A folder of <strong>isolated commercial clips</strong></li>
+          <li>Full diagnostic logs in <strong>JSON, CSV, and EDL</strong></li>
+          <li><strong>ffmeta chapter markers</strong> for media player navigation</li>
+          <li>A <strong>structured ML dataset</strong> (<code>dataset.jsonl</code>) with 74 per-segment feature columns</li>
+          <li>A <strong>run manifest</strong> recording all parameters and detection statistics</li>
+        </ul>
+
+        <p>The pipeline is self-contained (ffmpeg bundled), batch-friendly, and designed for noisy analog sources where black slugs vary in length and clarity.</p>
+
+        <h2>Topics</h2>
+        <div class="inset">
+          <table style="border:none; width:100%;">
+            <tr><td style="border:none; padding:2px 6px; width:22px;">✂️</td><td style="border:none; padding:2px 6px;"><span class="toc-link" onclick="show('pipeline')">How It Works</span> — Detection pipeline, confidence scoring, export modes</td></tr>
+            <tr><td style="border:none; padding:2px 6px;">▶</td><td style="border:none; padding:2px 6px;"><span class="toc-link" onclick="show('quickstart')">Quick Start</span> — Get from launch to a clean show master</td></tr>
+            <tr><td style="border:none; padding:2px 6px;">🔧</td><td style="border:none; padding:2px 6px;"><span class="toc-link" onclick="show('parameters')">All Parameters</span> — Complete parameter reference</td></tr>
+            <tr><td style="border:none; padding:2px 6px;">💾</td><td style="border:none; padding:2px 6px;"><span class="toc-link" onclick="show('presets')">Preset System</span> — Built-in presets, saving, and file format</td></tr>
+            <tr><td style="border:none; padding:2px 6px;">🎛</td><td style="border:none; padding:2px 6px;"><span class="toc-link" onclick="show('tuning')">Tuning Guide</span> — Fixing false positives, missed breaks, noisy tape</td></tr>
+            <tr><td style="border:none; padding:2px 6px;">📊</td><td style="border:none; padding:2px 6px;"><span class="toc-link" onclick="show('ml')">ML Dataset Output</span> — The 74-column dataset.jsonl format</td></tr>
+            <tr><td style="border:none; padding:2px 6px;">💡</td><td style="border:none; padding:2px 6px;"><span class="toc-link" onclick="show('usecases')">Use Cases</span> — Archiving, batch processing, ML, compilations</td></tr>
+          </table>
+        </div>
+      </div>
+
+      <!-- QUICK START -->
+      <div class="page" id="page-quickstart">
+        <h1>Quick Start</h1>
+
+        <h2>1. Choose your input</h2>
+        <p>Select a single video file, or switch to <strong>Batch Folder</strong> mode and select a directory. All matching video files inside will be queued.</p>
+
+        <h2>2. Set your output folder</h2>
+        <p>A subfolder is created per input file — you'll never lose track of which output came from which tape. Results are never overwritten; re-processing appends <code>_1</code>, <code>_2</code>, etc.</p>
+
+        <h2>3. Pick a preset</h2>
+        <p>Open the <strong>Presets</strong> menu and choose the one closest to your source material. See <span class="toc-link" onclick="show('presets')">Preset System</span> for descriptions.</p>
+
+        <h2>4. Dry run first</h2>
+        <p>Enable <strong>Dry Run</strong> before committing to a full export. This runs the full detection pipeline and writes all logs, but cuts no media. Review <code>detect.json</code> and check <code>dataset.jsonl</code> for cuts where only <code>sig_black_boundary</code> fired and confidence is below 0.90 — those are the weakest detections and worth inspecting first.</p>
+
+        <h2>5. Final export</h2>
+        <p>Disable Dry Run. Enable <strong>Re-encode</strong> for frame-accurate archival cuts (H.264/AAC). Run.</p>
+
+        <pre>Recommended workflow:
+
+  1. Enable Dry Run
+  2. Review activity log and detect.json
+  3. Adjust parameters if needed, re-run dry
+  4. Disable Dry Run, enable Re-encode
+  5. Run final export</pre>
+
+        <div class="info-box">
+          <span class="icon">💡</span>
+          <div>We default to <code>-c copy</code> for speed. Stream copy snaps to the nearest keyframe — a few frames of error at each boundary. Enable <code>reencode</code> for surgical precision.</div>
+        </div>
+      </div>
+
+      <!-- OUTPUT STRUCTURE -->
+      <div class="page" id="page-output">
+        <h1>Output Structure</h1>
+
+        <div class="file-tree">
+<span class="dir">&lt;outdir&gt;/</span>
+  <span class="dir">&lt;basename&gt;/</span>
+    <span class="dir">commercials/</span>
+      &lt;basename&gt;_ad_0001.mp4
+      &lt;basename&gt;_ad_0002.mp4
+      ...
+    <span class="dir">show/</span>
+      <span class="dir">_parts/</span>
+        part_0001.mp4
+        part_0002.mp4
+      &lt;basename&gt;_show.mp4
+    <span class="dir">logs/</span>
+      detect.json              <span class="note">← full structured plan</span>
+      detect.csv               <span class="note">← flat interval table</span>
+      detect.edl               <span class="note">← EDL (Kodi, MPC-HC, mkvmerge)</span>
+      chapters.ffmeta          <span class="note">← ffmpeg chapter metadata</span>
+      run_manifest.json        <span class="note">← all parameters + detection counts</span>
+      dataset.jsonl            <span class="note">← ML feature vectors (74 columns)</span>
+      ffmpeg_blackdetect.log   <span class="note">← verbosity ≥ 1</span>
+      ffmpeg_silencedetect.log <span class="note">← verbosity ≥ 1</span>
+      ffmpeg_uniformdetect.log <span class="note">← verbosity ≥ 2</span>
+      ffmpeg_scenechange.log   <span class="note">← verbosity ≥ 2</span>
+        </div>
+
+        <h2>Embedding chapter markers</h2>
+        <p>Keep segments become <code>Content N</code> chapters; commercial blocks become <code>Advertisement N</code>. Embed into the show file:</p>
+        <pre>ffmpeg -i show.mp4 -i logs/chapters.ffmeta \
+  -map_metadata 1 -c copy show_with_chapters.mp4</pre>
+        <p>Recognized by VLC, mpv, Kodi, and any player that reads ffmpeg metadata.</p>
+      </div>
+
+      <!-- HOW IT WORKS / PIPELINE -->
+      <div class="page" id="page-pipeline">
+        <h1>How It Works</h1>
+
+        <p>Each commercial candidate passes through four independent detection passes in sequence. Every signal that fires is recorded against the interval and reflected in its confidence score.</p>
+
+        <h2>Detection Passes</h2>
+        <div class="step-list">
+          <div class="step">
+            <div class="step-num">1</div>
+            <div class="step-body"><strong>Black Frame Detection</strong><br>Uses ffmpeg <code>blackdetect</code> to locate near-black frames. Segments shorter than <code>blackMinDur</code> are discarded. Segments within <code>mergeGap</code> seconds are merged.</div>
+          </div>
+          <div class="step">
+            <div class="step-num">2</div>
+            <div class="step-body"><strong>Audio Silence Corroboration</strong> <em>(Comskip: validate_silence)</em><br>Uses ffmpeg <code>silencedetect</code>. Candidates overlapping a silence segment by ≥ 0.5 s receive <code>silence_overlap</code> and a <strong>+0.05 confidence boost</strong>. Set <code>silenceNoiseDb</code> ≥ 0 to disable.</div>
+          </div>
+          <div class="step">
+            <div class="step-num">3</div>
+            <div class="step-body"><strong>Uniform Frame Corroboration</strong> <em>(Comskip: validate_uniform)</em><br>Uses ffmpeg <code>showinfo</code> to compute per-frame luma stddev. Frames with stddev ≤ <code>uniformMaxStddev</code> are classified as uniform slates. Candidates overlapping ≥ 0.3 s receive <code>uniform_overlap</code> and <strong>+0.04 boost</strong>. Set <code>uniformMaxStddev</code> to 0 to disable.</div>
+          </div>
+          <div class="step">
+            <div class="step-num">4</div>
+            <div class="step-body"><strong>Scene Change Rate Scoring</strong> <em>(Comskip: validate_scenechange)</em><br>Uses ffmpeg <code>select=scene</code>. Blocks exceeding 1.3× the file average scene rate receive <code>high_scene_rate</code> and <strong>+0.04 boost</strong>. Set <code>sceneThreshold</code> to 0 to disable.</div>
+          </div>
+        </div>
+
+        <h2>Scoring Guards</h2>
+        <table>
+          <thead><tr><th>Guard</th><th>Parameter</th><th>Comskip equivalent</th></tr></thead>
+          <tbody>
+            <tr><td>Uncorroborated penalty</td><td>automatic</td><td>punish_modifier</td></tr>
+            <tr><td>Minimum show segment</td><td>minShowSegment</td><td>min_show_segment_length</td></tr>
+            <tr><td>Edge protection</td><td>alwaysKeepFirst / alwaysKeepLast</td><td>always_keep_first/last_seconds</td></tr>
+            <tr><td>30s boundary snapping</td><td>requireDiv5</td><td>require_div5</td></tr>
+            <tr><td>Asymmetric trim</td><td>removeBefore / removeAfter</td><td>remove_before / remove_after</td></tr>
+          </tbody>
+        </table>
+
+        <h2>Confidence Score</h2>
+        <p>Every <code>CutInterval</code> carries a <code>confidence</code> float (0.0–1.0) and a <code>signals</code> list. The activity log renders confidence as a star rating:</p>
+        <table>
+          <thead><tr><th>Score</th><th>Display</th><th>Meaning</th></tr></thead>
+          <tbody>
+            <tr><td>≥ 1.0</td><td>★★★</td><td>Multiple corroborating signals</td></tr>
+            <tr><td>≥ 0.8</td><td>★★☆</td><td>At least one corroborating signal</td></tr>
+            <tr><td>&lt; 0.8</td><td>★☆☆</td><td>Black boundary only — no corroboration</td></tr>
+          </tbody>
+        </table>
+      </div>
+
+      <!-- PARAMETERS -->
+      <div class="page" id="page-parameters">
+        <h1>All Parameters</h1>
+
+        <h2>Input / Output</h2>
+        <table>
+          <thead><tr><th>Parameter</th><th>Type</th><th>Description</th></tr></thead>
+          <tbody>
+            <tr><td>inputMode</td><td>singleFile | batchDir</td><td>Process one file or a whole folder</td></tr>
+            <tr><td>inputPath</td><td>path</td><td>Input file or folder path</td></tr>
+            <tr><td>glob</td><td>pattern</td><td>Comma-separated globs for batch mode (e.g. <code>*.mp4,*.mov,*.dv</code>)</td></tr>
+            <tr><td>outdir</td><td>path</td><td>Base output directory — a subfolder is created per input file</td></tr>
+          </tbody>
+        </table>
+
+        <h2>Black Frame Detection</h2>
+        <table>
+          <thead><tr><th>Parameter</th><th>Default</th><th>Description</th></tr></thead>
+          <tbody>
+            <tr><td>blackMinDur</td><td>0.10 s</td><td>Minimum black segment duration. Shorter flashes are discarded.</td></tr>
+            <tr><td>pixTh</td><td>0.08</td><td>Pixel luma threshold for <code>blackdetect</code>. Lower = stricter black definition.</td></tr>
+            <tr><td>picTh</td><td>0.98</td><td>Fraction of pixels per frame that must be below <code>pixTh</code>.</td></tr>
+            <tr><td>mergeGap</td><td>1.5 s</td><td>Merge black segments separated by ≤ this gap. Prevents flickering slugs from splitting boundaries.</td></tr>
+          </tbody>
+        </table>
+
+        <h2>Cut Behaviour</h2>
+        <table>
+          <thead><tr><th>Parameter</th><th>Default</th><th>Description</th></tr></thead>
+          <tbody>
+            <tr><td>edgePadPre</td><td>0.20 s</td><td>Padding added before each cut boundary.</td></tr>
+            <tr><td>edgePadPost</td><td>0.06 s</td><td>Padding added after each cut boundary.</td></tr>
+            <tr><td>minCommercial</td><td>5 s</td><td>Minimum gap to classify as a commercial break.</td></tr>
+            <tr><td>maxCommercial</td><td>240 s</td><td>Maximum gap to classify as a commercial break.</td></tr>
+            <tr><td>includeBlack</td><td>false</td><td>Include surrounding black frames inside exported commercial clips.</td></tr>
+            <tr><td>reencode</td><td>false</td><td>Re-encode output with H.264/AAC for frame-accurate cuts.</td></tr>
+            <tr><td>dryRun</td><td>false</td><td>Write logs only — no media files are created.</td></tr>
+          </tbody>
+        </table>
+
+        <h2>Advanced Detection (Comskip-derived)</h2>
+        <table>
+          <thead><tr><th>Parameter</th><th>Default</th><th>Comskip equiv.</th><th>Description</th></tr></thead>
+          <tbody>
+            <tr><td>silenceNoiseDb</td><td>-40 dB</td><td>max_silence</td><td>Audio noise floor. Set ≥ 0 to disable silence detection.</td></tr>
+            <tr><td>silenceMinDur</td><td>0.5 s</td><td>min_silence</td><td>Minimum silence duration to register as a segment.</td></tr>
+            <tr><td>minShowSegment</td><td>30 s</td><td>min_show_segment_length</td><td>Minimum keep-segment length. Cuts that would leave shorter keeps are demoted.</td></tr>
+            <tr><td>alwaysKeepFirst</td><td>0 s</td><td>always_keep_first_seconds</td><td>Hard-protect first N seconds from being cut.</td></tr>
+            <tr><td>alwaysKeepLast</td><td>0 s</td><td>always_keep_last_seconds</td><td>Hard-protect last N seconds from being cut.</td></tr>
+            <tr><td>uniformMaxStddev</td><td>8.0</td><td>non_uniformity</td><td>Luma stddev ceiling for uniform frame detection. Set to 0 to disable.</td></tr>
+            <tr><td>sceneThreshold</td><td>0.4</td><td>schange_threshold</td><td>Scene change sensitivity. Set to 0 to disable.</td></tr>
+            <tr><td>removeBefore</td><td>0 s</td><td>remove_before</td><td>Trim from the content side of each cut.</td></tr>
+            <tr><td>removeAfter</td><td>0 s</td><td>remove_after</td><td>Trim from the ad side of each cut.</td></tr>
+            <tr><td>requireDiv5</td><td>false</td><td>require_div5</td><td>Snap or drop candidates not within 3 s of a 30-second multiple.</td></tr>
+          </tbody>
+        </table>
+
+        <h2>Verbosity</h2>
+        <table>
+          <thead><tr><th>Value</th><th>Output</th></tr></thead>
+          <tbody>
+            <tr><td>0</td><td>Errors only</td></tr>
+            <tr><td>1</td><td>Milestones + raw blackdetect/silencedetect logs written to <code>logs/</code></td></tr>
+            <tr><td>2</td><td>Full step-by-step + all raw filter logs written to <code>logs/</code></td></tr>
+          </tbody>
+        </table>
+      </div>
+
+      <!-- PRESETS -->
+      <div class="page" id="page-presets">
+        <h1>Preset System</h1>
+        <p>AdSlicerProXP ships with three built-in presets and a full save/load system.</p>
+
+        <h2>Built-in Presets</h2>
+        <table>
+          <thead><tr><th>File</th><th>Purpose</th></tr></thead>
+          <tbody>
+            <tr><td>default.json</td><td>Balanced starting point for typical VHS</td></tr>
+            <tr><td>vhs_noisy.json</td><td>Loose thresholds for degraded/worn tape</td></tr>
+            <tr><td>broadcast_strict.json</td><td>Strict thresholds with 30s snapping for clean off-air captures</td></tr>
+          </tbody>
+        </table>
+
+        <h2>Preset Menu</h2>
+        <pre>Presets
+  ── BUILT-IN ──────────────
+  Broadcast strict
+  Default
+  VHS noisy
+  ── MY PRESETS ────────────
+  my_custom_settings
+  ──────────────────────────
+  Save Current as Preset…
+  ──────────────────────────
+  Open User Presets Folder…
+  Reload Presets</pre>
+
+        <h2>User Preset Locations</h2>
+        <table>
+          <thead><tr><th>Platform</th><th>Path</th></tr></thead>
+          <tbody>
+            <tr><td>macOS</td><td><code>~/Library/Application Support/net.schwwaaa.adslicerproxp/presets/</code></td></tr>
+            <tr><td>Windows</td><td><code>%APPDATA%\net.schwwaaa.adslicerproxp\presets\</code></td></tr>
+            <tr><td>Linux</td><td><code>~/.config/net.schwwaaa.adslicerproxp/presets/</code></td></tr>
+          </tbody>
+        </table>
+
+        <p>Use <strong>Presets → Open User Presets Folder…</strong> to open this location. Drop any <code>.json</code> file there and use <strong>Reload Presets</strong> to make it appear in the menu.</p>
+
+        <h2>Preset File Format</h2>
+        <p>Plain JSON. <code>_preset</code> sets the menu label; <code>_description</code> sets the tooltip. Unrecognized keys are silently ignored.</p>
+        <pre>{
+  "_preset": "My custom VHS settings",
+  "_description": "Tuned for my specific deck and capture card.",
+  "blackMinDur": 0.10,
+  "pixTh": 0.08,
+  "picTh": 0.98,
+  "mergeGap": 1.5,
+  "minCommercial": 5,
+  "maxCommercial": 240,
+  "silenceNoiseDb": -40,
+  "requireDiv5": false
+}</pre>
+
+        <h2>Adding a Built-in Preset to the Build</h2>
+        <p>Drop a <code>.json</code> file into <code>src-tauri/presets/</code> and rebuild. The <code>tauri.conf.json</code> resources glob picks it up — no code changes needed.</p>
+      </div>
+
+      <!-- TUNING -->
+      <div class="page" id="page-tuning">
+        <h1>Tuning Guide</h1>
+        <p>Thresholds may require tuning for darker or noisier analog captures. Always <strong>Dry Run</strong> first and review <code>dataset.jsonl</code> before committing to export.</p>
+
+        <h2>Too many false positives (content being cut)</h2>
+        <ul>
+          <li>Raise <code>blackMinDur</code> (0.15–0.25) — require longer slugs</li>
+          <li>Raise <code>picTh</code> (0.99) — require nearly pure black frames</li>
+          <li>Increase <code>minShowSegment</code> (60–120 s) — prevent short content being consumed</li>
+          <li>Enable <code>requireDiv5</code> for clean broadcast — non-multiples of 30 s are not real ad breaks</li>
+          <li>Raise <code>minCommercial</code> — filter breaks too short to be real commercials</li>
+          <li>Check <code>dataset.jsonl</code> for cuts where only <code>sig_black_boundary</code> fired — weakest detections</li>
+        </ul>
+
+        <h2>Missed commercials (breaks not detected)</h2>
+        <ul>
+          <li>Lower <code>blackMinDur</code> (0.06–0.08) — accept shorter slugs</li>
+          <li>Raise <code>pixTh</code> (0.10–0.14) — more permissive black definition</li>
+          <li>Lower <code>picTh</code> (0.90–0.95) — allow noisier black frames</li>
+          <li>Increase <code>mergeGap</code> for flickering VHS slug patterns</li>
+          <li>Lower <code>sceneThreshold</code> (0.25–0.35) — catch more cuts within blocks</li>
+        </ul>
+
+        <h2>Noisy or degraded VHS</h2>
+        <ul>
+          <li>Raise <code>pixTh</code> + lower <code>picTh</code> — the standard analog adjustment</li>
+          <li>Raise <code>uniformMaxStddev</code> (12–18) — VHS black slugs are never truly uniform</li>
+          <li>Set <code>removeBefore 0.1</code> — recovers content clipped by ambiguous slug entry points</li>
+          <li>Disable <code>requireDiv5</code> — VHS timing is irregular</li>
+          <li>Lower <code>silenceNoiseDb</code> to -35 dB — VHS audio floor is noisier</li>
+        </ul>
+
+        <h2>Clean off-air broadcast</h2>
+        <ul>
+          <li>Enable <code>requireDiv5</code> — US TV commercials are exact 15/30/60/90 s units</li>
+          <li>Set <code>alwaysKeepFirst 15</code> and <code>alwaysKeepLast 15</code> — protect cold opens and credits</li>
+          <li>Lower <code>uniformMaxStddev</code> to 5–6 — broadcast slates are near-perfect</li>
+          <li>Raise <code>sceneThreshold</code> to 0.45 — hard cuts only; avoid dissolve false positives</li>
+        </ul>
+
+        <h2>Recommended workflow</h2>
+        <ol>
+          <li>Run with <code>dryRun</code> enabled — review <code>detect.json</code> and the activity log</li>
+          <li>Check <code>dataset.jsonl</code> — confidence below 0.90 or only <code>sig_black_boundary</code> firing is worth inspecting</li>
+          <li>Adjust parameters and re-run dry until the plan is correct</li>
+          <li>Remove <code>dryRun</code> and enable <code>reencode</code> for final archival export</li>
+        </ol>
+      </div>
+
+      <!-- ML DATASET -->
+      <div class="page" id="page-ml">
+        <h1>ML Dataset Output</h1>
+        <p>Every run writes <code>logs/dataset.jsonl</code> — one JSON object per line, one line per segment, 74 columns. Load it directly:</p>
+        <pre>import pandas as pd
+df = pd.read_json("logs/dataset.jsonl", lines=True)</pre>
+
+        <h2>Column Groups</h2>
+
+        <h3>Identity (4 cols)</h3>
+        <table>
+          <thead><tr><th>Column</th><th>Type</th><th>Description</th></tr></thead>
+          <tbody>
+            <tr><td>run_id</td><td>string</td><td>ISO-8601 UTC timestamp of the processing run</td></tr>
+            <tr><td>source_file</td><td>string</td><td>Input filename stem</td></tr>
+            <tr><td>segment_index</td><td>int</td><td>Index within this label type</td></tr>
+            <tr><td>timeline_position</td><td>int</td><td>Sequential position in the overall file timeline</td></tr>
+          </tbody>
+        </table>
+
+        <h3>Timing (9 cols)</h3>
+        <table>
+          <thead><tr><th>Column</th><th>Description</th></tr></thead>
+          <tbody>
+            <tr><td>start_s, end_s, dur_s</td><td>Absolute timestamps and duration in seconds</td></tr>
+            <tr><td>start_norm, end_norm, dur_norm</td><td>Position and duration as fraction of file length (0–1)</td></tr>
+            <tr><td>offset_from_start_s</td><td>Seconds from start of recording</td></tr>
+            <tr><td>offset_from_end_s</td><td>Seconds from end of recording</td></tr>
+          </tbody>
+        </table>
+
+        <h3>Signal Indicators — all 0.0 or 1.0 (11 cols)</h3>
+        <table>
+          <thead><tr><th>Column</th><th>Fires when</th></tr></thead>
+          <tbody>
+            <tr><td>sig_black_boundary</td><td>Interval is bracketed by a black slug</td></tr>
+            <tr><td>sig_within_commercial_range</td><td>Duration within [min_commercial, max_commercial]</td></tr>
+            <tr><td>sig_silence_overlap</td><td>Silence corroboration fired</td></tr>
+            <tr><td>sig_uniform_overlap</td><td>Uniform frame corroboration fired</td></tr>
+            <tr><td>sig_high_scene_rate</td><td>Scene rate exceeds 1.3× file average</td></tr>
+            <tr><td>sig_demoted_min_show_segment</td><td>Was a commercial candidate, demoted by show guard</td></tr>
+            <tr><td>sig_always_keep_first/last</td><td>Interval falls within the always-keep window</td></tr>
+            <tr><td>sig_content_between_commercials</td><td>Standard keep between two commercial blocks</td></tr>
+            <tr><td>sig_div5_snapped</td><td>Boundary was snapped to a 30 s multiple</td></tr>
+          </tbody>
+        </table>
+
+        <h3>Classification (3 cols)</h3>
+        <table>
+          <thead><tr><th>Column</th><th>Values</th></tr></thead>
+          <tbody>
+            <tr><td>label</td><td>"commercial" or "keep"</td></tr>
+            <tr><td>label_int</td><td>1 = commercial, 0 = keep</td></tr>
+            <tr><td>confidence</td><td>Detection confidence score 0.0–1.0</td></tr>
+          </tbody>
+        </table>
+
+        <h2>Usage Examples</h2>
+        <pre>import pandas as pd
+from sklearn.ensemble import RandomForestClassifier
+
+df = pd.read_json("logs/dataset.jsonl", lines=True)
+
+# Feature matrix
+X = df[[
+    "dur_s", "dur_norm", "start_norm",
+    "black_left_dur_s", "black_right_dur_s",
+    "silence_coverage", "has_silence_overlap",
+    "scene_change_rate", "scene_change_rate_vs_avg",
+    "sig_black_boundary", "sig_silence_overlap",
+]]
+y = df["label_int"]
+
+# Compare across parameter tuning runs
+runs = pd.concat([
+    pd.read_json("run1/logs/dataset.jsonl", lines=True),
+    pd.read_json("run2/logs/dataset.jsonl", lines=True),
+])
+runs.groupby("param_scene_threshold")["run_commercial_ratio"].mean()
+
+# Inspect low-confidence cuts
+df[(df["label"] == "commercial") & (df["confidence"] < 0.9)]</pre>
+
+        <div class="info-box">
+          <span class="icon">ℹ</span>
+          <div>All <code>param_*</code> columns are fully denormalised. Individual files can be concatenated across runs and remain independently queryable.</div>
+        </div>
+      </div>
+
+      <!-- USE CASES -->
+      <div class="page" id="page-usecases">
+        <h1>Use Cases</h1>
+
+        <h2>Archiving Full Broadcasts With and Without Commercials</h2>
+        <p>A collector digitizes a 1992 NBC Sunday Night Movie from VHS. They want to preserve the entire broadcast — including vintage promos and ads — but also need a clean version for watching. AdSlicerProXP outputs both automatically: <code>show/</code> (clean movie) and <code>commercials/</code> (all ad blocks), plus <code>detect.json</code> for reproducible archive metadata.</p>
+
+        <h2>Digitizing VHS Tapes With Automatic Cleanup</h2>
+        <p>A preservation group receives 300 home-recorded VHS tapes spanning 1986–2004. Batch-mode processing handles entire shelves at once. Threshold tuning ensures detection works across varied analog sources. Hundreds of hours are segmented, cleaned, exported into uniform directory structures, and logged for verification — eliminating months of manual editing.</p>
+
+        <h2>Preparing Footage for YouTube or Streaming</h2>
+        <p>A creator uploading 1990s cartoons needs commercial breaks removed to avoid Content ID strikes. AdSlicerProXP with <code>reencode</code> produces frame-accurate clean masters with no leftover partial-commercial frames.</p>
+
+        <h2>Building ML Training Sets</h2>
+        <p>A research lab training a commercial-boundary detection model needs ground-truth timestamps for black slugs, silence regions, ad gaps, and keep segments. AdSlicerProXP's <code>dataset.jsonl</code> provides a complete labeled dataset — 74 feature columns per segment — without manual annotation.</p>
+
+        <h2>Creating Commercial Compilations</h2>
+        <p>An editor wants all McDonald's commercials from 1997 ABC broadcasts. Commercials are already cleanly extracted into individual files in <code>commercials/</code> — drop them into a timeline or sort by brand via captioning or logo detection.</p>
+
+        <h2>High-Volume TV Archive Processing</h2>
+        <p>A university lab processes 1,200 Betacam SP and VHS tapes from 1980–2002. AdSlicerProXP's structured <code>run_manifest.json</code> and <code>detect.json</code> provide the audit trail. Every tape gets a uniform directory layout with consistent metadata ready for digital asset management ingestion.</p>
+      </div>
+
+      <!-- BUILDING -->
+      <div class="page" id="page-building">
+        <h1>Building from Source</h1>
+
+        <h2>First-time setup</h2>
+        <p>Download static ffmpeg/ffprobe builds into <code>src-tauri/binaries/</code>. Run once before first build.</p>
+        <pre>./build.sh setup-bins</pre>
+
+        <h2>Dev mode</h2>
+        <pre>cd src-tauri
+cargo tauri dev</pre>
+
+        <h2>Release builds</h2>
+        <table>
+          <thead><tr><th>Command</th><th>Target</th></tr></thead>
+          <tbody>
+            <tr><td>./build.sh</td><td>Auto-detect current OS</td></tr>
+            <tr><td>./build.sh mac-universal</td><td>macOS arm64 + x86_64 fat binary</td></tr>
+            <tr><td>./build.sh mac-arm</td><td>macOS Apple Silicon only</td></tr>
+            <tr><td>./build.sh mac-x86</td><td>macOS Intel only</td></tr>
+            <tr><td>./build.sh windows</td><td>Windows x86_64</td></tr>
+          </tbody>
+        </table>
+
+        <p>ffmpeg and ffprobe are bundled automatically. Users need no external dependencies.</p>
+
+        <h2>Adding a built-in preset</h2>
+        <p>Drop a <code>.json</code> file into <code>src-tauri/presets/</code> and run <code>./build.sh</code>. The <code>tauri.conf.json</code> resources glob picks it up — no code changes needed.</p>
+      </div>
+
+    </div>
+  </div>
+
+  <div class="status-bar">
+    <div class="status-panel" id="status-text">Introduction</div>
+    <div class="status-panel">AdSlicerProXP Help v2.0</div>
+  </div>
+</div>
+
+<script>
+  const pages = ['home','quickstart','output','pipeline','parameters','presets','tuning','ml','usecases','building'];
+  const labels = {
+    home:'Introduction', quickstart:'Quick Start', output:'Output Structure',
+    pipeline:'How It Works', parameters:'All Parameters', presets:'Preset System',
+    tuning:'Tuning Guide', ml:'ML Dataset Output', usecases:'Use Cases', building:'Building from Source'
+  };
+
+  function show(id) {
+    pages.forEach(p => {
+      document.getElementById('page-'+p).classList.remove('visible');
+      const n = document.getElementById('nav-'+p);
+      if (n) n.classList.remove('selected');
+    });
+    document.getElementById('page-'+id).classList.add('visible');
+    const n = document.getElementById('nav-'+id);
+    if (n) n.classList.add('selected');
+    document.getElementById('status-text').textContent = labels[id] || id;
+    document.querySelector('.content-area').scrollTop = 0;
+  }
+</script>
+
+</body>
+</html>
